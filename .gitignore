@@ -1,3 +1,7 @@
+idea-sandbox/
+.idea/modules/
+.idea/modules.xml
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Gradle template
 .gradle
