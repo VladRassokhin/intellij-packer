@@ -1,0 +1,40 @@
+<idea-plugin version="2">
+  <id>org.intellij.plugins.packer</id>
+  <name>Useful features for packer json config editing</name>
+  <version>0.1</version>
+  <vendor email="vladislav.rassokhin@jetbrains.com">Vladislav Rassokhin from JetBrains</vendor>
+
+  <description><![CDATA[
+    ]]></description>
+
+  <change-notes><![CDATA[
+    ]]>
+  </change-notes>
+
+  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="141"/>
+
+  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.json</depends>
+
+
+  <extensions defaultExtensionNs="com.intellij">
+    <psi.referenceContributor language="JSON" implementation="org.intellij.plugins.packer.PackerShellProvisionerReferenceContributor" />
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>
