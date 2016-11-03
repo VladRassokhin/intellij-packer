@@ -1,10 +1,7 @@
 package org.intellij.plugins.packer;
 
-import com.intellij.json.psi.JsonArray;
-import com.intellij.json.psi.JsonProperty;
 import com.intellij.json.psi.JsonStringLiteral;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
@@ -18,17 +15,6 @@ class PackerShellScriptToFilePsiReferenceProvider extends PsiReferenceProvider {
         if (!(element instanceof JsonStringLiteral)) {
             return PsiReference.EMPTY_ARRAY;
         }
-        if (!(element.getParent() instanceof JsonArray)) {
-            return PsiReference.EMPTY_ARRAY;
-        }
-        if (!(element.getParent().getParent() instanceof JsonProperty)) {
-            return PsiReference.EMPTY_ARRAY;
-        }
-        final JsonProperty property = (JsonProperty) element.getParent().getParent();
-        if (!"scripts".equals(property.getName())) {
-            return PsiReference.EMPTY_ARRAY;
-        }
-
         final JsonStringLiteral literal = (JsonStringLiteral) element;
 //        final PsiFile file = literal.getContainingFile();
 //
