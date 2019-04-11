@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>org.intellij.plugins.packer</id>
   <name>Useful features for packer json config editing</name>
-  <version>0.1</version>
+  <version>0.1.1</version>
   <vendor email="vladislav.rassokhin@jetbrains.com">Vladislav Rassokhin from JetBrains</vendor>
 
   <description><![CDATA[
