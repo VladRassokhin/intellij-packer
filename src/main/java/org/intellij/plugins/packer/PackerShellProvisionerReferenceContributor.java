@@ -17,16 +17,17 @@ public class PackerShellProvisionerReferenceContributor extends PsiReferenceCont
         psiFile(JsonFile.class)
             .inVirtualFile(virtualFile().notNull())
             .withChild(psiElement(JsonObject.class).withChild(psiElement(JsonProperty.class).withName("builders")));
-    private static final ElementPattern<? extends PsiElement> SHELL_PROVISIONER = psiElement(JsonObject.class)
+    private static final ElementPattern<? extends PsiElement> SHELL_OR_POWERSHELL_PROVISIONER = psiElement(JsonObject.class)
         .withSuperParent(2, psiElement(JsonProperty.class).withName("provisioners"))
-        .withChild(psiElement(JsonProperty.class).withName("type").with(new PatternCondition<JsonProperty>("JsonPropertyWithStringValue(shell)") {
+            .withChild(psiElement(JsonProperty.class).withName("type").with(new PatternCondition<JsonProperty>("JsonPropertyWithStringValue(shell|powershell)") {
             @Override
             public boolean accepts(@NotNull JsonProperty jsonProperty, ProcessingContext context) {
                 JsonValue value = jsonProperty.getValue();
                 if (value == null) return false;
                 if (!(value instanceof JsonStringLiteral)) return false;
                 JsonStringLiteral literal = (JsonStringLiteral) value;
-                return "shell".equals(literal.getValue());
+                String val = literal.getValue();
+                return "shell".equals(val) || "powershell".equals(val);
             }
         }));
 
@@ -36,12 +37,12 @@ public class PackerShellProvisionerReferenceContributor extends PsiReferenceCont
             .inFile(PACKER_CONFIG_JSON_PATTERN)
             .withParent(psiElement(JsonArray.class))
             .withSuperParent(2, psiElement(JsonProperty.class).withName("scripts"))
-            .withSuperParent(3, SHELL_PROVISIONER);
+            .withSuperParent(3, SHELL_OR_POWERSHELL_PROVISIONER);
         registrar.registerReferenceProvider(scripts, new PackerShellScriptToFilePsiReferenceProvider());
         final PsiElementPattern.Capture<JsonStringLiteral> script = PlatformPatterns.psiElement(JsonStringLiteral.class)
             .inFile(PACKER_CONFIG_JSON_PATTERN)
             .withParent(psiElement(JsonProperty.class).withName("script"))
-            .withSuperParent(2, SHELL_PROVISIONER);
+            .withSuperParent(2, SHELL_OR_POWERSHELL_PROVISIONER);
         registrar.registerReferenceProvider(script, new PackerShellScriptToFilePsiReferenceProvider());
     }
 
