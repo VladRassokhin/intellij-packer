@@ -15,7 +15,7 @@
  */
 
 plugins {
-    id 'org.jetbrains.intellij' version '0.2.14'
+    id 'org.jetbrains.intellij' version '0.4.9'
 }
 
 version = '0.1.1'
@@ -68,6 +68,6 @@ idea {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.5.1'
+wrapper {
+    gradleVersion = '5.5.1'
 }
