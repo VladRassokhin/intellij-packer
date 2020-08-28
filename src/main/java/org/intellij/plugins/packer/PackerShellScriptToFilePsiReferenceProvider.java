@@ -1,13 +1,14 @@
 package org.intellij.plugins.packer;
 
 import com.intellij.json.psi.JsonStringLiteral;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
-import com.intellij.util.Function;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 import java.util.Collections;
 
 class PackerShellScriptToFilePsiReferenceProvider extends PsiReferenceProvider {
@@ -37,11 +38,12 @@ class PackerShellScriptToFilePsiReferenceProvider extends PsiReferenceProvider {
             }
         };
         if (relativeOnly) {
-            set.addCustomization(FileReferenceSet.DEFAULT_PATH_EVALUATOR_OPTION, new Function<PsiFile, Collection<PsiFileSystemItem>>() {
-                @Override
-                public Collection<PsiFileSystemItem> fun(PsiFile psiFile) {
-                    return Collections.<PsiFileSystemItem>singleton(psiFile.getParent());
+            set.addCustomization(FileReferenceSet.DEFAULT_PATH_EVALUATOR_OPTION, psiFile -> {
+                PsiDirectory parent = psiFile.getParent();
+                if (parent != null) {
+                    return Collections.singleton(parent);
                 }
+                return Collections.emptySet();
             });
         }
         return set.getAllReferences();
