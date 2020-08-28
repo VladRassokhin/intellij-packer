@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2016 JetBrains s.r.o.
+ * Copyright 2000-2020 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,16 @@
  */
 
 plugins {
-    id 'org.jetbrains.intellij' version '0.4.9'
+    id 'org.jetbrains.intellij' version '0.4.21'
 }
 
-version = '0.1.1'
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://repository.jetbrains.com/repo/'}
+}
+
+version = '0.1.2'
 if (System.hasProperty('build.number')) {
     version = "$version.${System.getProperty('build.number')}"
 }
@@ -27,7 +33,7 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'idea'
 
 intellij {
-    version '14.1.7'
+    version '2019.3'
     pluginName rootProject.name
     sandboxDirectory = "${project.projectDir}/idea-sandbox"
     updateSinceUntilBuild = false
@@ -45,8 +51,8 @@ clean {
 dependencies {
 }
 
-sourceCompatibility = '1.6'
-targetCompatibility = '1.6'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 sourceSets {
     test {
@@ -69,5 +75,5 @@ idea {
 }
 
 wrapper {
-    gradleVersion = '5.5.1'
+    gradleVersion = '6.6.1'
 }
